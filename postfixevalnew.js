@@ -1,7 +1,7 @@
 const postFixExpCont = document.querySelector(".postfixexp-cont").children;
 var postFixExp=[];
 var operandArr=[];
-var operator=['-', '+', '/', '*'];
+var operator=['+', '-', '/', '*'];
 var te=0;
 
 
