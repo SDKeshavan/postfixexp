@@ -44,6 +44,20 @@
             place-items: center;
             font-size: 30px;
         }
+
+        .grid{
+            display: grid;
+            grid-template-columns: 50% 50%;
+
+        }
+
+        label{
+            font-size: 20px;
+        }
+        .exp{
+            font-size: 23px;
+        }
+
     </style>
 </head>
 <body>
@@ -95,19 +109,23 @@
     </div>
 
 
-    <br><br><br>
+    <div class="grid">
+        <div>
+            <h3>Operation :</h3>
+            <div class="operation-cont">
+                <div class="ele num1"></div>
+                <div class="ele oper"></div>
+                <div class="ele num2"></div>
+                <div class="ele">=</div>
+                <div class="ele ans"></div>
+            </div>
+        </div>
 
-    <h3>Operation :</h3>
-    <div class="operation-cont">
-        <div class="ele num1"></div>
-        <div class="ele oper"></div>
-        <div class="ele num2"></div>
-        <div class="ele">=</div>
-        <div class="ele ans"></div>
+        <div>
+            <h3>Answer :</h3>
+            <div class="result"></div>
+        </div>
     </div>
-
-    <h3>Answer :</h3>
-    <div class="result"></div>
 
     <script src="postfixevalnew.js"></script>
 </body>
