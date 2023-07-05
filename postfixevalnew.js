@@ -89,10 +89,12 @@ function eval(){
                 },500,k);
             },500,k);
         }else{
+            postFixExpCont[k].style.border="3px solid red";
             setTimeout((k)=>{
-                postFixExpCont[k-1].style.border="1px solid #000"
-                postFixExpCont[k].style.border="3px solid red";
                 document.querySelector(".oper").innerHTML= postFixExp[k];
+                setTimeout((k)=>{
+                    postFixExpCont[k].style.border="1px solid #000";
+                },700,k);
             },700,k);
             te-=1;
             
@@ -144,6 +146,7 @@ function eval(){
             },700,te,k,num1,num2);
         
             te+=1;
+
         }
         k+=1;
     }else{
