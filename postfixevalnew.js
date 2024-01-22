@@ -1,26 +1,61 @@
 const postFixExpCont = document.querySelector(".postfixexp-cont").children;
 var postFixExp=[];
 var operandArr=[];
-var operator=['+', '-', '/', '*'];
+var operator=['-', '+', '/', '*'];
 var te=0;
 
 
 
 function convert(){
     var oriExp = document.forms["inputForm"]["expression"].value;    
+    var oriExpArr=[]
     var temp="";
-
-    for(i=0;i<oriExp.length;i++){
-        if(oriExp[i]!=" "){
+    for(var i=0;i<oriExp.length;i++){
+        if(!operator.includes(oriExp[i])){
             temp+=oriExp[i];
         }else{
-            postFixExp.push(temp);
+            oriExpArr.push(temp);
+            oriExpArr.push(oriExp[i]);
             temp="";
         }
     }
 
     if(temp!=""){
-        postFixExp.push(temp);
+        oriExpArr.push(temp);
+    }
+
+    var operatorStack=[];
+    var top=-1;
+
+    for(var j=0;j<oriExpArr.length;j++){
+        if(operator.includes(oriExpArr[j])){
+            if(top==-1){
+                operatorStack.push(oriExpArr[j]);
+                top+=1;
+            }else{
+                if(operator.indexOf(operatorStack[top])<=operator.indexOf(oriExpArr[j])){
+                    operatorStack.push(oriExpArr[j]);
+                    top+=1;
+                }else{
+                    while(operator.indexOf(operatorStack[top])>operator.indexOf(oriExpArr[j])){
+                        postFixExp.push(operatorStack.pop());
+                        top-=1;
+                    }
+                    operatorStack.push(oriExpArr[j]);
+                    top+=1;
+                }
+            }
+        }else{
+            postFixExp.push(parseFloat(oriExpArr[j]));
+        }
+    }
+
+
+    if(top>=0){
+        while(top>=0){
+            postFixExp.push(operatorStack.pop());
+            top-=1;
+        }
     }
 
     for(var m=0;m<postFixExp.length;m++){
@@ -31,7 +66,9 @@ function convert(){
             }
             ,500*m,m);
     }
+
 }
+
 
 var k=0;
 
@@ -60,7 +97,7 @@ function eval(){
                 },700,k);
             },700,k);
             te-=1;
-            
+
             postFixExpeval[te].style.border="3px solid red";
             postFixExpeval[te-1].style.border="3px solid red";
 
@@ -68,15 +105,15 @@ function eval(){
                 postFixExpeval[te].style.border="1px solid #000";
                 postFixExpeval[te-1].style.border="1px solid #000";
             },700,te);
-            
-            var num2=parseInt(operandArr.pop());
+
+            var num2=operandArr.pop();
 
             setTimeout((te)=>{
                 postFixExpeval[te].innerHTML="";
             },700,te);
-            
+
             te-=1;
-            var num1=parseInt(operandArr.pop());
+            var num1=operandArr.pop();
             setTimeout((te)=>{
                 postFixExpeval[te].innerHTML="";
             },700,te);
@@ -107,7 +144,7 @@ function eval(){
                     postFixExpeval[te].innerHTML=num1/num2;
                 }
             },700,te,k,num1,num2);
-        
+
             te+=1;
 
         }
